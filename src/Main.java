@@ -13,3 +13,23 @@ public class Main {
             
             Configuracion config = new Configuracion(ruta);
             SimuladorConcurrente simulador = new SimuladorConcurrente(config);
+        
+             // Menu simple
+            System.out.println("\n=== SIMULADOR DE CONEXIONES ===");
+            System.out.println("1. Simulación RAW");
+            System.out.println("2. Simulación POOLED");
+            System.out.println("3. Ambas simulaciones");
+            System.out.print("Selecciona: ");
+            
+            String opcion = scanner.nextLine();
+            
+            // Hilo para detectar freno
+            Thread frenoThread = new Thread(() -> {
+                System.out.println("Presiona ENTER para activar FRENO...");
+                try {
+                    System.in.read();
+                    simulador.activarFreno();
+                } catch (IOException e) {}
+            });
+            frenoThread.setDaemon(true);
+            frenoThread.start();
