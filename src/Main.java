@@ -33,3 +33,33 @@ public class Main {
             });
             frenoThread.setDaemon(true);
             frenoThread.start();
+
+         // Ejecutar segun opcion
+            switch(opcion) {
+                case "1":
+                    simulador.simularRaw();
+                    break;
+                case "2":
+                    simulador.simularPooled();
+                    break;
+                case "3":
+                    long inicio = System.currentTimeMillis();
+                    
+                    simulador.simularRaw();
+                    simulador.simularPooled();
+                    
+                    long total = System.currentTimeMillis() - inicio;
+                    System.out.println("\n=== COMPARATIVA ===");
+                    System.out.println("Revisa los archivos .log generados");
+                    System.out.printf("Tiempo total: %d ms%n", total);
+                    break;
+                default:
+                    System.out.println("Opción no válida");
+            }
+            
+        } catch (Exception e) {
+            System.err.println("ERROR: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+}
