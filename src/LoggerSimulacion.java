@@ -19,3 +19,15 @@ public class LoggerSimulacion {
             id, estado, intento, tiempoMs);
         writer.flush();
     }
+
+public void logResumen(int total, int exitosas, int fallidas, long tiempoTotal, double promedioReintentos) {
+        writer.println("\n=== RESUMEN " + tipoSimulacion + " ===");
+        writer.printf("Total muestras: %d%n", total);
+        writer.printf("Exitosas: %d (%.2f%%)%n", exitosas, (exitosas * 100.0 / total));
+        writer.printf("Fallidas: %d (%.2f%%)%n", fallidas, (fallidas * 100.0 / total));
+        writer.printf("Tiempo total: %d ms%n", tiempoTotal);
+        writer.printf("Promedio reintentos: %.2f%n", promedioReintentos);
+        writer.flush();
+        writer.close();
+    }
+}
