@@ -1,7 +1,12 @@
+package main;
 import java.sql.*;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.*;
+
+import data.Configuracion;
+import data.LoggerSimulacion;
+import database.PoolConexiones;
 
 public class SimuladorConcurrente {
     private Configuracion config;
@@ -12,7 +17,7 @@ public class SimuladorConcurrente {
     }
     
     public void simularRaw() throws Exception {
-        System.out.println("=== INICIANDO SIMULACIÓN RAW ===");
+        System.out.println("=== INICIANDO SIMULACIoN RAW ===");
         LoggerSimulacion logger = new LoggerSimulacion("RAW");
         
         long inicioTotal = System.currentTimeMillis();
@@ -79,9 +84,9 @@ public class SimuladorConcurrente {
     }
     
     public void simularPooled() throws Exception {
-        System.out.println("=== INICIANDO SIMULACIÓN POOLED ===");
+        System.out.println("=== INICIANDO SIMULACION POOLED ===");
         LoggerSimulacion logger = new LoggerSimulacion("POOLED");
-        PoolConexiones pool = new PoolConexiones(config);
+        PoolConexiones pool = new PoolConexiones(config.getDbUrl(), config.getDbUser(), config.getDbPassword(), config.getPoolSize());
         
         long inicioTotal = System.currentTimeMillis();
         ExecutorService executor = Executors.newFixedThreadPool(config.getNumMuestras());
