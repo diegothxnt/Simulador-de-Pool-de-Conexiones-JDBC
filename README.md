@@ -10,7 +10,7 @@ El código está organizado en los siguientes módulos:
     * `Configuracion.java`: Encargado de cargar los parámetros de ejecución desde el archivo properties.
     * `LoggerSimulacion.java`: Registra los tiempos de respuesta, reintentos y el estado (éxito/fallo) de cada muestra en la simulación.
 * **`database/`**: Lógica de acceso y gestión de la base de datos.
-    * `PoolConexiones.java`: Implementa un pool de conexiones de tamaño fijo utilizando la estructura concurrente `ArrayBlockingQueue` para gestionar el tráfico de hilos de forma segura.
+    * `PoolConexiones.java`: Implementa un pool de conexiones de tamaño fijo.
 * **`main/`**: Núcleo de ejecución de la aplicación.
     * `Main.java`: Punto de entrada del programa.
     * `SimuladorConcurrente.java`: Orquesta la creación de hilos concurrentes mediante `ExecutorService` y ejecuta las dos modalidades de prueba (Raw y Pooled).
@@ -29,7 +29,7 @@ El código está organizado en los siguientes módulos:
 
 1. Asegurarse de tener un motor de base de datos ejecutándose (MySQL, PostgreSQL, etc.) y el driver JDBC correspondiente.
 2. Configura los valores del archivo `properties/config.properties` con tus credenciales locales y los parámetros de estrés deseados.
-3. Compilar usando ```javac -cp "lib/postgresql-42.7.9.jar" src/*.java -d bin``` 
-4. Ejecutar usando ```java -cp "bin;lib/postgresql-42.7.9.jar" Main```
+3. Compilar usando ```javac -d bin -cp "lib/*" src/data/*.java src/database/*.java src/main/*.java``` 
+4. Ejecutar usando ```java -cp "bin;lib/*" main.Main```
 5. Cuando lo solicite, especificar la ruta: `src/properties/config.properties`
 6. Revisar la salida en consola y los logs generados para analizar los resultados.
