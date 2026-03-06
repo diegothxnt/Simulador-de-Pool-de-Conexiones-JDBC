@@ -16,22 +16,19 @@ public class PoolConexiones {
         }
     }
 
-    // Agregamos 'synchronized' para que solo un hilo pueda entrar a la vez
+    // 'synchronized' para que solo un hilo pueda entrar a la vez
     public synchronized Connection obtenerConexion() throws InterruptedException {
-        // Usamos un bucle 'while' en lugar de un 'if' para evitar despertares falsos (spurious wakeups)
         while (pool.isEmpty()) {
-            wait(); // El hilo suelta el candado y se duerme hasta que alguien lo despierte
-        }
-        
-        // Saca la primera conexión de la lista y se la entrega al hilo
+            wait();
+        }  
         return pool.removeFirst(); 
     }
     
-    // También debe ser 'synchronized' para evitar condiciones de carrera al devolver la conexión
+    // 'synchronized' para evitar condiciones de carrera al devolver la conexión
     public synchronized void liberarConexion(Connection conn) {
         if (conn != null) {
-            pool.addLast(conn); // Devuelve la conexión al final de la fila
-            notifyAll(); // ¡Grita! Despierta a todos los hilos que estaban dormidos en el wait()
+            pool.addLast(conn);
+            notifyAll();
         }
     }
     
@@ -39,6 +36,6 @@ public class PoolConexiones {
         for (Connection conn : pool) {
             conn.close();
         }
-        pool.clear(); // Vaciamos la lista por limpieza
+        pool.clear();
     }
 }
